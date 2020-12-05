@@ -12,7 +12,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy;
+import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class AppTest {
         .withClasspathResourceMapping("rippled",
           "/config",
           BindMode.READ_ONLY)
-        .waitingFor(new HostPortWaitStrategy());
+        .waitingFor(new LogMessageWaitStrategy().withRegEx(".*Consensus engine started.*"));
 
     static {
         rippledContainer.start();
